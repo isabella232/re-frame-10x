@@ -17,12 +17,14 @@
 
    see additional properties that can be specified in options
    https://github.com/joshwcomeau/react-flip-move#options"
+  (:require-macros [cljs.core :refer [exists?]])
   (:require
     [mranderson047.reagent.v0v7v0.reagent.core :as reagent]
     [cljsjs.react-flip-move]))
 
 (def component
-  (reagent/adapt-react-class js/FlipMove))
+  (when (exists? js/FlipMove)
+        (reagent/adapt-react-class js/FlipMove)))
 
 (def ^{:constant true
        :doc "mimic v-box style properties for standard :div
