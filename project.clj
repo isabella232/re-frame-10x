@@ -1,4 +1,4 @@
-(defproject status-im/re-frame-10x "0.2.1-SNAPSHOT"
+(defproject status-im/re-frame-10x "0.2.1-RN"
   :description "Become 10x more productive when developing and debugging re-frame applications."
   :url "https://github.com/Day8/re-frame-10x"
   :license {:name "MIT"}
