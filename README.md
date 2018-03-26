@@ -2,6 +2,10 @@
 
 # re-frame-10x
 
+## ReactNative
+
+This fork is supposed to be used with React Native apps https://github.com/status-im/re-frame-10x/tree/v0.2.1-RN#react-native-setup
+
 `re-frame-10x` lets you instrument, and then inspect, the inner workings of a running `re-frame` application. It presents as a programmer's dashboard, delivering curated insight and illumination.
 
 It helps you find false assumptions faster.
