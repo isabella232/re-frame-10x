@@ -7,7 +7,7 @@
             [day8.re-frame-10x.view.subs :as subs]
             [day8.re-frame-10x.view.views :as views]
             [day8.re-frame-10x.view.traces :as traces]
-            [day8.re-frame-10x.view.code :as code]
+            [day8.re-frame-10x.view.fx :as fx]
             [day8.re-frame-10x.view.parts :as parts]
             [day8.re-frame-10x.view.timing :as timing]
             [day8.re-frame-10x.view.debug :as debug]
@@ -140,10 +140,9 @@
                     :align    :end
                     :height   "50px"
                     :children [(tab-button :event "Event")
+                               (tab-button :fx "fx")
                                (tab-button :app-db "app-db")
                                (tab-button :subs "Subs")
-                               (when (:debug? opts)
-                                 (tab-button :code "Code"))
                                (when (:debug? opts)
                                  (tab-button :parts "Parts"))
                                ;(tab-button :views "Views")
@@ -155,23 +154,25 @@
      (when (and external-window? @unloading?)
        [:h1.host-closed "Host window has closed. Reopen external window to continue tracing."])
      (when-not (re-frame.trace/is-trace-enabled?)
-       [:h1.host-closed {:style {:word-wrap "break-word"}} "Tracing is not enabled. Please set " [:pre "{\"re_frame_10x.trace.trace_enabled_QMARK_\" true}"] " in " [:pre ":closure-defines"]])
+       [:h1.host-closed {:style {:word-wrap "break-word"}} "Tracing is not enabled. Please set "
+        ;; Note this Closure define is in re-frame, not re-frame-10x
+        [:pre "{\"re_frame.trace.trace_enabled_QMARK_\" true}"] " in " [:pre ":closure-defines"]])
      [rc/v-box
       :size "auto"
       :style {:margin-left common/gs-19s
-              :overflow-y  (if (contains? #{:timing :debug :event :subs :settings :code :parts} @selected-tab)
+              :overflow-y  (if (contains? #{:event :fx :parts :timing :debug :settings} @selected-tab)
                              "auto" "initial")
               ;:overflow    "auto" ;; TODO: Might have to put this back or add scrolling within the panels
               }
       :children [(case @selected-tab
                    :event    [event/render]
+                   :fx       [fx/render]
                    :app-db   [app-db/render db/app-db]
                    :subs     [subs/render]
                    :views    [views/render]
-                   :code    [code/render]
-                   :parts [parts/render]
+                   :parts    [parts/render]
                    :timing   [timing/render]
-                   :traces [traces/render]
+                   :traces   [traces/render]
                    :debug    [debug/render]
                    :settings [settings/render]
                    [app-db/render db/app-db])]]]))
