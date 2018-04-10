@@ -181,12 +181,16 @@ re-frame-10x includes an experimental code tracing feature for tracing the code 
 
 ## React Native Setup
 
+It's possible to use re-frame-10x via re-frisk-remote plugin https://github.com/flexsurfer/re-frisk-remote
+
 To use re-frame-10x with React Native do the following:
 
 - Add `goog.global.CLOSURE_UNCOMPILED_DEFINES = {"re_frame.trace.trace_enabled_QMARK_":true};` to `figwheel-bridge.js`
 We need to do this because `:closure-defines` doesn't work in RN. More info here: https://github.com/drapanjanas/re-natal/issues/46
 - Have `lein-re-frisk` >0.5.5  `re-frisk-remote` >0.5.4 and `re-frisk-sidecar` >0.5.5 added to your `project.clj`
-Setup instructions here: https://github.com/flexsurfer/re-frisk
+Setup instructions here: https://github.com/flexsurfer/re-frisk-remote
+- Start your app with re-frisk-remote enabled. Add `:enable-re-frame-10x? true` option to `enable-re-frisk-remote!` fn call.
+- Open http://localhost:4567/10x
 
 You could use this PR https://github.com/status-im/status-react/pull/3521 as an example of what needs to be done to make it work with RN
 
